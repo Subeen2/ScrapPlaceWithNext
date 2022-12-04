@@ -6,3 +6,7 @@ export interface Place {
   offDay: string;
   contact: string;
 }
+
+export interface PlaceProps {
+  place: Place;
+}
