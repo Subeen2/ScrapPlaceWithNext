@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+// import { Map, MapMarker } from 'react-kakao-maps-sdk'
 import styles from '../styles/Home.module.scss'
 import { Place } from '../type'
 import AddPlace from './AddPlace'
@@ -17,18 +18,20 @@ export default function Home() {
     if (typeof placeItems === 'string') {
       setPlaceArr(JSON.parse(placeItems))
     }
-  }, [isShow])
 
-  const scrapListClicked = () => {
-    if (typeof placeItems === 'string') {
-      setPlaceArr(JSON.parse(placeItems))
-    }
-    setIsShow(true)
-  }
+    console.log(placeArr)
+  }, [])
 
-  const addPlaceClicked = () => {
-    setIsShow(false)
-  }
+  // const scrapListClicked = () => {
+  //   if (typeof placeItems === 'string') {
+  //     setPlaceArr(JSON.parse(placeItems))
+  //   }
+  //   setIsShow(true)
+  // }
+
+  // const addPlaceClicked = () => {
+  //   setIsShow(false)
+  // }
 
   const deletePlace = (e: any) => {
     const targetText = e.target.previousElementSibling.previousElementSibling.innerText
@@ -46,9 +49,15 @@ export default function Home() {
       }
     }
   }
+
   return (
     <BaseLayout>
       <main className={styles.main}>
+        {/* <Map center={{ lat: 33.5563, lng: 126.79581 }} style={{ width: '100%', height: '360px' }}>
+          <MapMarker position={{ lat: 33.55635, lng: 126.795841 }}>
+            <div style={{ color: '#000' }}>Hello World!</div>
+          </MapMarker>
+        </Map> */}
         <ScrapPlace placeArr={placeArr} deletePlace={deletePlace} isShow={isShow} />
         <AddPlace placeArr={placeArr} isShow={isShow} setIsShow={setIsShow} />
       </main>

@@ -1,5 +1,6 @@
 /*global kakao */
-import React, { ReactElement, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { Place } from '../type'
 import PlaceDetail from './PlaceDetail'
 
 interface Props {
@@ -8,16 +9,7 @@ interface Props {
   deletePlace: any
 }
 
-interface Place {
-  placename: string
-  address: string
-  openingHours: string
-  breakTime: string
-  offDay: string
-  contact: string
-}
-
-const ScrapPlace = (props: Props): ReactElement => {
+function ScrapPlace(props: Props) {
   if (typeof window !== 'undefined') {
     const kakao = (window as any).kakao
   }
@@ -34,10 +26,11 @@ const ScrapPlace = (props: Props): ReactElement => {
     }
   }, [props.isShow])
 
-  const detailPlace = (e: any) => {
+  const detailPlace = (e: /*global kakao */ React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    const target = e.currentTarget
     setIsPlaceClicked(!isPlaceClicked)
     for (let i = 0; i < props.placeArr.length; i++) {
-      if (props.placeArr[i].placename === e.target.innerText) {
+      if (props.placeArr[i].placename === target.innerText) {
         setIndexOfItem(i)
       }
     }
@@ -59,18 +52,19 @@ const ScrapPlace = (props: Props): ReactElement => {
 
   return (
     <div className={className}>
+      <PlaceDetail place={props.placeArr[indexOfItem]} />
       {isPlaceClicked ? (
         <div>
           <PlaceDetail place={props.placeArr[indexOfItem]} />
-          <footer>
+          {/* <footer>
             <button onClick={detailPlace} className='go-list'>
               목록으로
             </button>
-          </footer>
+          </footer> */}
         </div>
       ) : (
         <div className='scrap-list-box'>
-          <span className='star-text'>★</span>
+          <span className='star-text'></span>
           <h2 className='scrap-text'>스크랩한 목록</h2>
           <p className='content'>해당 장소를 클릭하시면 장소에 대한 세부 내용이 출력됩니다. !</p>
           <div className='place-list-box'>{placeList}</div>
